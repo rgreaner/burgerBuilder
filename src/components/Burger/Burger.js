@@ -3,7 +3,7 @@ import BurgerIngredient from './BurgerIngredient/BurgerIngredient';
 import classes from './Burger.css';
 
 const burger = (props) => {
-    const transformedIngredients = Object.keys(props.ingredients).map(igKey => {
+    let transformedIngredients = Object.keys(props.ingredients).map(igKey => {
         //Extracting keys of a give obj & turning that into an array. --->Array of keys
         //Map then executes a function on each element in the array.
             //Transform the string value from igKey into an array with as many elements as there are ingredients for a given ingredient.
@@ -17,8 +17,13 @@ const burger = (props) => {
                 //Ex: key={igKey + i} equals key={cheese +1} equals key={cheese1}
             
         });
-    });
-
+    }).reduce((arr, el) => {
+        return arr.concat(el)
+        //Taking given element and adding it to the original arr array.
+    }, []);
+    if (transformedIngredients.length === 0){
+        transformedIngredients = <p>Please start adding ingredients!</p>
+    }
     return (
         <div className={classes.Burger}>
             <BurgerIngredient type="bread-top" />
